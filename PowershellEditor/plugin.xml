@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            name="Powershell Editor"
+            default = "true"
+            extensions="ps1"
+            icon="icons/cmdlet.png"
+            contributorClass="org.eclipse.ui.texteditor.BasicTextEditorActionContributor"
+            class="org.powershell.editors.PowershellEditor"
+            id="org.powershell.editors.PowershellEditor">
+      </editor>
+   </extension>
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            name="Powershell Editor"
+            default = "true"
+            extensions="psm1"
+            icon="icons/psm1.png"
+            contributorClass="org.eclipse.ui.texteditor.BasicTextEditorActionContributor"
+            class="org.powershell.editors.PowershellModuleEditor"
+            id="org.powershell.editors.PowershellModuleEditor">
+      </editor>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="org.eclipse.jdt.ui.JavaPerspective">
+         <view
+               id="mypseditor.views.SampleView"
+               ratio="0.5"
+               relationship="right"
+               relative="org.eclipse.ui.views.TaskList">
+         </view>
+      </perspectiveExtension>
+   </extension>
+   <extension
+         point="org.eclipse.help.contexts">
+      <contexts
+            file="contexts.xml">
+      </contexts>
+   </extension>
+
+	<extension point="org.eclipse.ui.perspectives">
+	   <perspective
+	         name="Powershell"
+	         class="org.powershell.perspective.PSPerspective"
+	         id="org.powershell.perspective.PSPerspective"
+	         icon="icons/cmdlet.png">
+	   </perspective>
+	</extension>
+	
+	<extension point="org.eclipse.debug.core.launchConfigurationTypes">
+		<launchConfigurationType
+			delegate="org.powershell.launcher.PowershellLaunchDelegate"
+			delegateDescription="Launches the Powershell application with the arguments provided by
+			the SampleView of the project"
+			id="org.powershell.launcher.PSLauncher"
+			modes="run"
+			name="Powershell Launcher"
+			public="true"
+			icon="icons\cmdlet.png"
+			extensions="ps1">
+		</launchConfigurationType>
+	</extension>
+
+<extension
+	point="org.eclipse.debug.ui.launchConfigurationTypeImages">
+ 		<launchConfigurationTypeImage
+			icon="icons\cmdlet.png"
+			configTypeID="org.powershell.launcher.PSLauncher"
+			id="org.eclipse.jdt.debug.ui.launchConfigurationTypeImage.localJavaApplication">
+		</launchConfigurationTypeImage>
+	</extension>
+
+ <extension point="org.eclipse.debug.ui.launchConfigurationTabGroups">
+   <launchConfigurationTabGroup 
+      id="org.powershell.launcher.PSLauncher"
+      type="org.powershell.launcher.PSLauncher"
+      class="org.powershell.launcher.PSLauncher">
+   </launchConfigurationTabGroup>
+ </extension>
+ 
+ <extension point="org.eclipse.debug.ui.launchShortcuts">
+    <shortcut
+        id="org.eclipse.jdt.debug.ui.javaAppletShortcut"
+        class="org.eclipse.jdt.internal.debug.ui.launcher.JavaAppletLaunchShortcut"
+        label="Powershell Script"
+        icon="$icons\cmdlet.png"
+        modes="run">
+            <perspective id="org.powershell.perspective.PSPerspective"/>
+    </shortcut>
+</extension>
+
+ <extension point="org.eclipse.debug.ui.launchShortcuts">
+    <shortcut
+           class="org.powershell.launcher.PowershellLaunchShortcut"
+           description="Launch Powershell script"
+           icon="icons\cmdlet.png"
+           id="org.powershell.launcher.PowershellLaunchShortcut"
+           label="Launch Powershell script"
+           modes="run">
+       <contextualLaunch>
+         <enablement>
+           <with variable="selection">
+             <count value="1"/>
+              <iterate>
+                 <or>
+                   <test property="org.eclipse.debug.ui.matchesPattern" value="ps1"/>
+                   <test property="org.eclipse.debug.ui.matchesPattern" value="psm1"/>
+                 </or>
+              </iterate>
+             </with>
+         </enablement>
+                </contextualLaunch>
+    </shortcut>
+ </extension>
+
+</plugin>
