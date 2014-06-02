@@ -14,4 +14,4 @@ Environment setup
 The plugin runs only on windows installations. 
 The Powershell execution must allow execution of scripts. it can be achieved by running the following command in Powershell command:
 
-Set-ExecutionPolicy Unrestricted
+<code>Set-ExecutionPolicy Unrestricted</code>
