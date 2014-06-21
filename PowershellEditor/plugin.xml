@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            name="Powershell Editor"
+            default = "true"
+            extensions="ps1"
+            icon="icons/cmdlet.png"
+            contributorClass="org.eclipse.ui.texteditor.BasicTextEditorActionContributor"
+            class="org.powershell.editors.PowershellEditor"
+            id="org.powershell.editors.PowershellEditor">
+      </editor>
+   </extension>
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            name="Powershell Editor"
+            default = "true"
+            extensions="psm1"
+            icon="icons/psm1.png"
+            contributorClass="org.eclipse.ui.texteditor.BasicTextEditorActionContributor"
+            class="org.powershell.editors.PowershellModuleEditor"
+            id="org.powershell.editors.PowershellModuleEditor">
+      </editor>
+   </extension>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            class="org.powershell.preferences.PowershellPreferencePage"
+            id="PowershellPreferencePage_general"
+            name="Powershell Preferences">
+      </page>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="org.eclipse.jdt.ui.JavaPerspective">
+         <view
+               id="mypseditor.views.SampleView"
+               ratio="0.5"
+               relationship="right"
+               relative="org.eclipse.ui.views.TaskList">
+         </view>
+      </perspectiveExtension>
+   </extension>
+   <extension
+         point="org.eclipse.ui.contexts">
+      <context
+            description="Powershell editor context"
+            id="org.eclipse.powershell.editor"
+            name="Powershell editor"
+            parentId="org.eclipse.ui.textEditorScope">
+      </context>
+   </extension>
+
+	<extension point="org.eclipse.ui.perspectives">
+	   <perspective
+	         name="Powershell"
+	         class="org.powershell.perspective.PSPerspective"
+	         id="org.powershell.perspective.PSPerspective"
+	         icon="icons/cmdlet.png">
+	   </perspective>
+	</extension>
+	
+	<extension point="org.eclipse.debug.core.launchConfigurationTypes">
+		<launchConfigurationType
+			delegate="org.powershell.launcher.PowershellLaunchDelegate"
+			delegateDescription="Launches the Powershell application with the arguments provided by
+			the SampleView of the project"
+			id="org.powershell.launcher.PSLauncher"
+			modes="run"
+			name="Powershell Launcher"
+			public="true"
+			icon="icons\cmdlet.png"
+			extensions="ps1">
+		</launchConfigurationType>
+	</extension>
+
+<extension
+	point="org.eclipse.debug.ui.launchConfigurationTypeImages">
+ 		<launchConfigurationTypeImage
+			icon="icons\cmdlet.png"
+			configTypeID="org.powershell.launcher.PSLauncher"
+			id="org.eclipse.jdt.debug.ui.launchConfigurationTypeImage.localJavaApplication">
+		</launchConfigurationTypeImage>
+	</extension>
+
+ <extension point="org.eclipse.debug.ui.launchConfigurationTabGroups">
+   <launchConfigurationTabGroup 
+      id="org.powershell.launcher.PSLauncher"
+      type="org.powershell.launcher.PSLauncher"
+      class="org.powershell.launcher.PSLauncher">
+   </launchConfigurationTabGroup>
+ </extension>
+ 
+ <extension point="org.eclipse.debug.ui.launchShortcuts">
+    <shortcut
+        id="org.eclipse.jdt.debug.ui.javaAppletShortcut"
+        class="org.eclipse.jdt.internal.debug.ui.launcher.JavaAppletLaunchShortcut"
+        label="Powershell Script"
+        icon="$icons\cmdlet.png"
+        modes="run">
+            <perspective id="org.powershell.perspective.PSPerspective"/>
+    </shortcut>
+</extension>
+
+ <extension point="org.eclipse.debug.ui.launchShortcuts">
+    <shortcut
+           class="org.powershell.launcher.PowershellLaunchShortcut"
+           description="Launch Powershell script"
+           icon="icons\cmdlet.png"
+           id="org.powershell.launcher.PowershellLaunchShortcut"
+           label="Launch Powershell script"
+           modes="run">
+       <contextualLaunch>
+         <enablement>
+           <with variable="selection">
+             <count value="1"/>
+              <iterate>
+                 <or>
+                   <test property="org.eclipse.debug.ui.matchesPattern" value="ps1"/>
+                   <test property="org.eclipse.debug.ui.matchesPattern" value="psm1"/>
+                 </or>
+              </iterate>
+             </with>
+         </enablement>
+                </contextualLaunch>
+    </shortcut>
+ </extension>
+ 
+ <extension
+         point="org.eclipse.ui.bindings">
+      <key
+            commandId="org.eclipse.powershell.gotodefinition"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="F3">
+      </key>
+      <key
+            commandId="org.eclipse.powershell.addcomment"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="M1+/">
+      </key>
+      <key
+            commandId="PowershellEditor.Format"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="Ctrl+Shift+F">
+      </key>
+   </extension>
+   
+   <extension
+         point="org.eclipse.ui.commands">
+       <category
+            description="Powershell editor category"
+            id="org.eclipse.powershell.category.editor"
+            name="Powershell editor">
+      </category>
+      <command
+            categoryId="org.eclipse.powershell.category.editor"
+            defaultHandler="org.powershell.editors.handlers.DefinitionHandler"
+            description="Go to definition"
+            id="org.eclipse.powershell.gotodefinition"
+            name="Go To Definition">
+      </command>
+      <command
+            categoryId="org.eclipse.powershell.category.editor"
+            defaultHandler="org.powershell.editors.handlers.CommentHandler"
+            description="Comment/Uncomment the selected source code"
+            id="org.eclipse.powershell.addcomment"
+            name="Comment/Uncomment">
+      </command>
+      <command
+            id="PowershellEditor.Format"
+            defaultHandler="org.powershell.editors.handlers.FormatHandler"
+            description="Format source"
+            name="Format">
+      </command>
+	</extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            allPopups="false"
+            locationURI="menu:org.eclipse.ui.main.menu?after=edit">
+         <menu
+               id="PowershellEditor.SourceCodeMenu"
+               label="Source Code"
+               mnemonic="v">
+            <command
+                  commandId="PowershellEditor.Format"
+                  icon="icons/cmdlet.png"
+                  label="Format Source"
+                  style="push"
+                  tooltip="Format the source">
+            </command>
+         </menu>
+      </menuContribution>
+   </extension>
+
+</plugin>
