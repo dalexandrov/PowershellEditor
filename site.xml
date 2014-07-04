@@ -3,5 +3,8 @@
    <description name="PowershellEditorPlugin" url="http://dalexandrov.github.io/PowershellEditor/">
       used with Windows only
    </description>
-   <feature url="features/PowershellEditor_1.0.0.201407042120.jar" id="Powershell.PowershellEditor" version="1.0.0.201407042120" os="win32" ws="win32" nl="en_US" arch="ia64,ia64_32,PA_RISC,ppc,sparc,x86,x86_64"/>
+   <feature url="features/org.eclipse.PowershellEditor_1.0.0.201407042137.jar" id="org.eclipse.PowershellEditor" version="1.0.0.201407042137" os="win32" ws="win32" nl="en_US" arch="x86,x86_64">
+      <category name="Powershell"/>
+   </feature>
+   <category-def name="Powershell" label="Powershell"/>
 </site>
