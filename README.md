@@ -7,7 +7,7 @@ More information can be found here: http://dalexandrov.github.io/PowershellEdito
 
 Plugin setup
 ================
-just copy the PowershellEditor_0.0.0.5.jar to eclipse plugins folder.
+https://marketplace.eclipse.org/content/powershelleditor
 
 Environment setup
 ================
