@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-   <feature url="features/PowershellEditorFeature_1.0.0.201407121253.jar" id="PowershellEditorFeature" version="1.0.0.201407121253" os="aix,hpux,linux,macosx,qnx,solaris,win32" ws="carbon,cocoa,gtk,motif,photon,win32,wpf" arch="ia64,ia64_32,PA_RISC,ppc,sparc,x86,x86_64">
+   <feature url="features/PowershellEditorFeature_1.0.0.201407121322.jar" id="PowershellEditorFeature" version="1.0.0.201407121322" os="aix,hpux,linux,macosx,qnx,solaris,win32" ws="carbon,cocoa,gtk,motif,photon,win32,wpf" arch="ia64,ia64_32,PA_RISC,ppc,sparc,x86,x86_64">
       <category name="Powershell"/>
    </feature>
    <category-def name="Powershell" label="Powershell"/>
