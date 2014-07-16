@@ -1,6 +1,7 @@
 package org.powershell.editors.completion.dictionaries;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,36 +40,81 @@ public class PowershellDictionary extends AbstractDictionary {
 	 * Instantiates a new powershell dictionary.
 	 */
 	private PowershellDictionary() {
-		try {
-			// CMDLETS
-			cmdlets = new ArrayList<DictItem>();
-			Process proc = Runtime.getRuntime().exec(GET_CMDLETS_CMD);
-			proc.getOutputStream().close();
-			BufferedReader reader = new BufferedReader(new InputStreamReader(
-					proc.getInputStream()));
-			String newLine = null;
-			while ((newLine = reader.readLine()) != null) {
-				cmdlets.add(new DictItem(newLine.substring(0,
-						newLine.indexOf(" ")), newLine.substring(newLine
-						.indexOf(" ") + 1), "Global"));
-			}
-			reader.close();
+		// CMDLETS
+		cmdlets = new ArrayList<DictItem>();
+		String newLine = null;
+		if (System.getProperty("os.name").toLowerCase().indexOf("win") >= 0) {
+			try {
+				Process proc = Runtime.getRuntime().exec(GET_CMDLETS_CMD);
+				proc.getOutputStream().close();
+				BufferedReader reader = new BufferedReader(
+						new InputStreamReader(proc.getInputStream()));
 
-			// Variables
-			variables = new ArrayList<DictItem>();
-			proc = Runtime.getRuntime().exec(GET_VARIABLES_CMD);
-			proc.getOutputStream().close();
-			reader = new BufferedReader(new InputStreamReader(
-					proc.getInputStream()));
-			newLine = null;
-			while ((newLine = reader.readLine()) != null) {
-				variables
-						.add(new DictItem("$" + newLine, "Variable", "Global"));
+				while ((newLine = reader.readLine()) != null) {
+					cmdlets.add(new DictItem(newLine.substring(0,
+							newLine.indexOf(" ")), newLine.substring(newLine
+							.indexOf(" ") + 1), "Global"));
+				}
+				reader.close();
+			} catch (Exception e) {
+				Logger.getInstance().logError(
+						"Error getting powershell variales and functions", e);
 			}
-			reader.close();
-		} catch (Exception e) {
-			Logger.getInstance().logError(
-					"Error getting powershell variales and functions", e);
+		}
+
+		// in case we have no powershell..
+		if (cmdlets.size() < 1) {
+			BufferedReader fileReader = new BufferedReader(
+					new InputStreamReader(
+							(getClass().getResourceAsStream("/commands.list"))));
+			try {
+				while ((newLine = fileReader.readLine()) != null) {
+					cmdlets.add(new DictItem(newLine.substring(0,
+							newLine.indexOf(" ")), newLine.substring(newLine
+							.indexOf(" ") + 1), "Global"));
+				}
+				fileReader.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		// Variables
+		variables = new ArrayList<DictItem>();
+		if (System.getProperty("os.name").toLowerCase().indexOf("win") >= 0) {
+			try {
+				Process proc = Runtime.getRuntime().exec(GET_VARIABLES_CMD);
+				proc.getOutputStream().close();
+				BufferedReader reader = new BufferedReader(
+						new InputStreamReader(proc.getInputStream()));
+				newLine = null;
+				while ((newLine = reader.readLine()) != null) {
+					variables.add(new DictItem("$" + newLine, "Variable",
+							"Global"));
+				}
+				reader.close();
+			} catch (Exception e) {
+				Logger.getInstance().logError(
+						"Error getting powershell variables and functions", e);
+			}
+		}
+		// in case we have no powershell..
+		if (variables.size() < 1) {
+			BufferedReader fileReader = new BufferedReader(
+					new InputStreamReader(getClass().getResourceAsStream(
+							"/variables.list")));
+			try {
+				while ((newLine = fileReader.readLine()) != null) {
+					variables.add(new DictItem("$" + newLine, "Variable",
+							"Global"));
+				}
+				fileReader.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
 		}
 	}
 
