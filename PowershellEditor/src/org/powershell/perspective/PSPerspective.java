@@ -41,8 +41,8 @@ public class PSPerspective implements IPerspectiveFactory {
 		String editorArea = myLayout.getEditorArea();
 		myLayout.setEditorAreaVisible(false);
 
-		myLayout.addStandaloneView(CONSOLE_ID, true, IPageLayout.BOTTOM, .35f,
-				editorArea);
+//		myLayout.addStandaloneView(CONSOLE_ID, true, IPageLayout.BOTTOM, .35f,
+//				editorArea);
 		myLayout.addView(IConsoleConstants.ID_CONSOLE_VIEW, IPageLayout.BOTTOM,
 				.5f, editorArea);
 

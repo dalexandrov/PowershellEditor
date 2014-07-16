@@ -48,6 +48,7 @@ public class ConsoleDisplayMgr {
 	 */
 	private ConsoleDisplayMgr() {
 		// just construct
+		System.out.println("console....");
 	}
 
 	/**

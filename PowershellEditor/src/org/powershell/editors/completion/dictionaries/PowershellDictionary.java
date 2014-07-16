@@ -58,7 +58,7 @@ public class PowershellDictionary extends AbstractDictionary {
 				reader.close();
 			} catch (Exception e) {
 				Logger.getInstance().logError(
-						"Error getting powershell variales and functions", e);
+						"Error getting powershell variables and functions", e);
 			}
 		}
 
@@ -75,8 +75,8 @@ public class PowershellDictionary extends AbstractDictionary {
 				}
 				fileReader.close();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				Logger.getInstance().logError(
+						"Error getting powershell variables and functions", e);
 			}
 		}
 
@@ -111,8 +111,8 @@ public class PowershellDictionary extends AbstractDictionary {
 				}
 				fileReader.close();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				Logger.getInstance().logError(
+						"Error getting powershell variables and functions", e);
 			}
 
 		}

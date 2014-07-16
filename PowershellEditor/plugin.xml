@@ -197,5 +197,22 @@
          </menu>
       </menuContribution>
    </extension>
+   
+   <extension
+      point = "org.eclipse.ui.newWizards">
+	<category
+	   id = "org.powershell.wizard.new"
+	   name="Poweshell">
+	</category>
+ 	<wizard
+	   id = "org.powershell.wizard.newWizard"
+      	   name = "Poweshell Script"
+	   class="org.powershell.wizard.NewPSWizard"
+	   category="org.powershell.wizard.new"
+	   icon="icons/cmdlet.png">
+    	   <description>New Poweshell script</description>
+	</wizard>
+</extension>
+   
 
 </plugin>
