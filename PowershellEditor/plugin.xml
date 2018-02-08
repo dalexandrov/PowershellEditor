@@ -31,7 +31,7 @@
       <page
             class="org.powershell.preferences.PowershellPreferencePage"
             id="PowershellPreferencePage_general"
-            name="Powershell Preferences">
+            name="Powershell">
       </page>
    </extension>
    <extension
